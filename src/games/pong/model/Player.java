@@ -1,20 +1,16 @@
 package games.pong.model;
 
-import java.awt.event.KeyListener;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.Playable;
+import model.Entity;
 
 /**
  *
  * @author Uellington Conceição
  * @sice 09/05/2020
  */
-public class Player extends Playable {
+public class Player extends Entity {
 
     protected Rectangle2D rectangle;
 
@@ -24,25 +20,27 @@ public class Player extends Playable {
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void tick() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.;
     }
 
     @Override
     public void render(GraphicsContext graphic) {
         graphic.setFill(Color.BLACK);
-        graphic.fillRect(this.point.getX(), this.point.getY(), this.width, this.height);
+        graphic.fillRect(this.referencePoint[0].getX(), this.referencePoint[0].getY(), this.width, this.height);
         graphic.save();
-        graphic.setFill(Color.GREY);
-        graphic.fillOval(this.point.getX(), this.point.getY(), 5, 5);
-        graphic.save();
+//        this.showReferencePoints(graphic);
     }
 
     public void up() {
-        this.point = this.point.subtract(0, 10);
+        for (int i = 0; i < referencePoint.length; i++) {
+           referencePoint[i] = referencePoint[i].subtract(0, 5);
+        }
     }
-
+    
     public void down() {
-        this.point = this.point.add(0, 10);
+        for (int i = 0; i < referencePoint.length; i++) {
+           referencePoint[i] = referencePoint[i].add(0, 5);
+        }
     }
 }

@@ -27,12 +27,12 @@ public class Main extends Application {
         GameLoop gameLoop = new GameLoop(pong);
 
         Scene scene = new Scene(new Pane(pong.getCanvas()));
-        
-        scene.setOnKeyPressed(pong);
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        scene.setOnKeyPressed(pong);
 
         gameLoop.start();
         primaryStage.setOnCloseRequest(e -> gameLoop.stop());

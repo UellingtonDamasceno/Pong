@@ -2,12 +2,11 @@ package games.pong.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.Ball;
 import model.Game;
-import model.Playable;
+import model.Entity;
 
 /**
  *
@@ -15,34 +14,39 @@ import model.Playable;
  */
 public class Pong extends Game implements EventHandler<KeyEvent> {
 
-    private List<Playable> entities;
+    private List<Entity> entities;
     private Player player;
-    
+    private Ball ball;
+
     public Pong() {
-        this.entities = new LinkedList();
         this.player = new Player(this.WIDTH / 4, this.HEIGHT / 2, 10, 40);
+        this.ball = new Ball(this.WIDTH / 2, this.HEIGHT / 2, 10, 10);
+        
+        this.ball.addObserver(player);
+        
+        this.entities = new LinkedList();
+        this.entities.add(player);
+        this.entities.add(ball);
     }
 
-    public void addEntity(Playable entity) {
+    public void addEntity(Entity entity) {
         this.entities.add(entity);
     }
 
-    public void removeEntity(Playable entity) {
+    public void removeEntity(Entity entity) {
         this.entities.remove(entity);
     }
 
     @Override
     public void update() {
-        player.render(graphic);
         this.entities.forEach((entity) -> {
-            entity.update();
+            entity.tick();
             entity.render(this.graphic);
         });
     }
 
     @Override
     public void handle(KeyEvent event) {
-//        System.out.println(event.getCode());
         if (null == event.getCode()) {
             event.consume();
         } else {
