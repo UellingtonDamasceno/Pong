@@ -1,8 +1,5 @@
 package model;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Uellington Conceição
@@ -48,6 +45,7 @@ public class GameLoop implements Runnable {
             delta += (now - lastTime) / INTERVAL;
             lastTime = now;
             if (delta >= 1) {
+                this.game.clear();
                 this.game.update();
                 frames++;
                 delta--;
