@@ -3,9 +3,9 @@ package view;
 import games.pong.model.Pong;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.Game;
 import model.GameLoop;
 
 /**
@@ -23,12 +23,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pong pong = new Pong();
+        Pong pong = new Pong("Pong");
         GameLoop gameLoop = new GameLoop(pong);
+        
+        BorderPane borderPane = new BorderPane();
 
-        Scene scene = new Scene(new Pane(pong.getCanvas()));
-
+        borderPane.setCenter(pong.getCanvas());
+        Scene scene = new Scene(borderPane);
+        
         primaryStage.setScene(scene);
+        primaryStage.setTitle(pong.getName());
         primaryStage.setResizable(false);
         primaryStage.show();
 

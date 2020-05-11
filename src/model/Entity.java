@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  * @author Uellington Conceição
  * @since 09/05/2020
  */
-public abstract class Entity extends Observable implements Observer{
+public abstract class Entity extends Observable implements Observer {
 
     protected Point2D[] referencePoint;
     protected double width, height;
@@ -39,7 +39,7 @@ public abstract class Entity extends Observable implements Observer{
 
     public abstract void render(GraphicsContext graphic);
 
-    protected final void showReferencePoints(GraphicsContext graphic) {
+    public final void showReferencePoints(GraphicsContext graphic) {
         graphic.setFill(Color.RED);
         for (Point2D referencesPoint : referencePoint) {
             graphic.fillOval(referencesPoint.getX() - 2.5, referencesPoint.getY() - 2.5, 5, 5);
@@ -48,7 +48,5 @@ public abstract class Entity extends Observable implements Observer{
     }
 
     @Override
-    public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public abstract void update(Observable o, Object o1);
 }
