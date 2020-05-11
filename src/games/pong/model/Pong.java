@@ -50,6 +50,7 @@ public class Pong extends Game implements EventHandler<KeyEvent> {
         this.entities.forEach((entity) -> {
             entity.tick();
             entity.render(graphic);
+//            entity.showReferencePoints(graphic);
         });
     }
 

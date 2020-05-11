@@ -25,7 +25,9 @@ public class Separator extends Entity {
         graphic.fillRect(
                 this.referencePoint[0].getX(),
                 this.referencePoint[0].getY(), width, height);
-        graphic.save();
+        graphic.setStroke(Color.WHITE);
+        graphic.setLineWidth(10);
+        graphic.strokeOval(205, 75, 100, 100);
     }
 
     @Override

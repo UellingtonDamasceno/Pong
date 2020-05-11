@@ -38,6 +38,5 @@ public abstract class Game {
     public final void clear() {
         this.graphic.setFill(Color.GREY);
         this.graphic.fillRect(0, 0, WIDTH, HEIGHT);
-        this.graphic.save();
     }
 }
