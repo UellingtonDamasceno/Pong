@@ -16,7 +16,7 @@ public class Ball extends Entity {
 
     private Rectangle2D rectangle;
     private double dx, dy, speed;
-    
+
     public Ball(double x, double y, double width, double height) {
         super(x, y, width, height);
         this.rectangle = new Rectangle2D(x, y, width, height);
@@ -28,6 +28,16 @@ public class Ball extends Entity {
 
     @Override
     public void tick() {
+        double px = this.referencePoint[0].getX();
+        double py = this.referencePoint[0].getY();
+        
+        double position = py +(dy*speed);
+        if(position + this.height >= 250 || position < 0){
+            this.dy*=-1;
+        }
+        if(px >= 500 - this.width || px <= 0){
+           this.dx *= -1;
+        }
         this.referencePoint[0] = this.referencePoint[0].add(dx*speed, dy*speed);
         this.setChanged();
         this.notifyObservers(this.referencePoint);
