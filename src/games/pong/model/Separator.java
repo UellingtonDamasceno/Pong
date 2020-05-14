@@ -23,8 +23,8 @@ public class Separator extends Entity {
     public void render(GraphicsContext graphic) {
         graphic.setFill(Color.WHITE);
         graphic.fillRect(
-                this.referencePoint[0].getX(),
-                this.referencePoint[0].getY(), width, height);
+                this.referencePoints[0].getX(),
+                this.referencePoints[0].getY(), width, height);
         graphic.setStroke(Color.WHITE);
         graphic.setLineWidth(10);
         graphic.strokeOval(205, 75, 100, 100);

@@ -14,8 +14,13 @@ import model.Entity;
  */
 public class Player extends Entity {
 
+    private Rectangle2D rectangle;
+    private double offset;
+    
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);
+        this.rectangle = new Rectangle2D(x, y, width, height);
+        this.offset = 5;
     }
 
     @Override
@@ -25,30 +30,31 @@ public class Player extends Entity {
     @Override
     public void render(GraphicsContext graphic) {
         graphic.setFill(Color.BLACK);
-        graphic.fillRect(this.referencePoint[0].getX(), this.referencePoint[0].getY(), this.width, this.height);
+        graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 
     public void up() {
-        for (int i = 0; i < referencePoint.length; i++) {
-            referencePoint[i] = referencePoint[i].subtract(0, 5);
+        for (int i = 0; i < referencePoints.length; i++) {
+            referencePoints[i] = referencePoints[i].subtract(0, offset);
         }
     }
 
     public void down() {
-        for (int i = 0; i < referencePoint.length; i++) {
-            referencePoint[i] = referencePoint[i].add(0, 5);
+        for (int i = 0; i < referencePoints.length; i++) {
+            referencePoints[i] = referencePoints[i].add(0, offset);
         }
     }
 
     @Override
     public void update(Observable o, Object o1) {
-        Point2D[] referencePoints = (Point2D[]) o1;
-        Rectangle2D rectangle = new Rectangle2D(this.referencePoint[0].getX(), this.referencePoint[0].getY(), this.width, this.height);
-        for (Point2D referencePoint : referencePoints) {
-            if (rectangle.contains(referencePoint)) {
-                Ball ball = (Ball) o;
-                ball.setDirection(ball.getDirection().getOpposite());
-                ball.collided();
+        Point2D[] ballReferencePoints = (Point2D[]) o1;
+        if (ballReferencePoints[4].distance(this.referencePoints[4]) <= this.height) {
+            rectangle = new Rectangle2D(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
+            for (Point2D referencePoint : ballReferencePoints) {
+                if (this.rectangle.contains(referencePoint)) {
+                    ((Ball) o).collided();
+                    break;
+                }
             }
         }
     }
