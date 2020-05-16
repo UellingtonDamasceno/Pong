@@ -4,7 +4,7 @@ package util;
  *
  * @author Uellington Conceição
  */
-public class Settings {
+public abstract class Settings {
     public enum Direction{
         NORTH("SOUTH"), 
         SOUTH("NORTH"),

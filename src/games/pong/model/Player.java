@@ -15,8 +15,8 @@ import model.Entity;
 public class Player extends Entity {
 
     private Rectangle2D rectangle;
-    private double offset;
-    
+    private final double offset;
+
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);
         this.rectangle = new Rectangle2D(x, y, width, height);
@@ -34,14 +34,18 @@ public class Player extends Entity {
     }
 
     public void up() {
-        for (int i = 0; i < referencePoints.length; i++) {
-            referencePoints[i] = referencePoints[i].subtract(0, offset);
+        if (this.referencePoints[1].getY() >= offset) {
+            for (int i = 0; i < referencePoints.length; i++) {
+                referencePoints[i] = referencePoints[i].subtract(0, offset);
+            }
         }
     }
 
     public void down() {
-        for (int i = 0; i < referencePoints.length; i++) {
-            referencePoints[i] = referencePoints[i].add(0, offset);
+        if (this.referencePoints[7].getY() <= 250 - offset) {
+            for (int i = 0; i < referencePoints.length; i++) {
+                referencePoints[i] = referencePoints[i].add(0, offset);
+            }
         }
     }
 

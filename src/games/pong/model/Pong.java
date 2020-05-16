@@ -13,7 +13,7 @@ import model.Entity;
  */
 public class Pong extends Game implements EventHandler<KeyEvent> {
 
-    private List<Entity> entities;
+    private final List<Entity> entities;
     private final Player player;
     private final Player player2;
     private final Ball ball;

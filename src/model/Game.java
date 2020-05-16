@@ -16,7 +16,7 @@ public abstract class Game {
     protected final double WIDTH = 500;
     protected final double HEIGHT = 250;
 
-    protected Canvas canvas;
+    private final Canvas canvas;
     protected GraphicsContext graphic;
 
     public Game(String name) {
