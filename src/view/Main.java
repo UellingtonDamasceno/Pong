@@ -44,7 +44,7 @@ public class Main extends Application {
         borderPane.setBottom(hbox);
 
         Scene scene = new Scene(borderPane);
-        scene.setOnKeyPressed(pong);
+        scene.setOnKeyPressed(pong.getKeyHandle());
         
         primaryStage.setScene(scene);
         primaryStage.setTitle(pong.getName());

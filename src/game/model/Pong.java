@@ -1,19 +1,22 @@
 package game.model;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
+import java.util.Map;
+import javafx.scene.input.KeyCode;
 import model.Game;
 import model.Entity;
+import model.KeyHandle;
 
 /**
  *
  * @author Uellington Conceição
  */
-public class Pong extends Game implements EventHandler<KeyEvent> {
+public class Pong extends Game {
 
     private final List<Entity> entities;
+    private final KeyHandle keyHandle;
     private final Player player;
     private final Player player2;
     private final Ball ball;
@@ -27,12 +30,24 @@ public class Pong extends Game implements EventHandler<KeyEvent> {
         this.ball.addObserver(player);
         this.ball.addObserver(player2);
 
+        Map codes = new HashMap();
+        codes.put(KeyCode.W, player.up());
+        codes.put(KeyCode.S, player.down());
+        player.setActionMap(codes);
+        
+        codes = new HashMap();
+        codes.put(KeyCode.UP, player2.up());
+        codes.put(KeyCode.DOWN, player2.down());
+        player2.setActionMap(codes);
+
         this.entities = new LinkedList();
 
         this.entities.add(new Separator(WIDTH / 2, 0, 10, this.HEIGHT));
         this.entities.add(player);
         this.entities.add(ball);
         this.entities.add(player2);
+        this.keyHandle = new KeyHandle(this.entities);
+
     }
 
     public void addEntity(Entity entity) {
@@ -44,6 +59,11 @@ public class Pong extends Game implements EventHandler<KeyEvent> {
     }
 
     @Override
+    public KeyHandle getKeyHandle() {
+        return this.keyHandle;
+    }
+
+    @Override
     public void update() {
         this.entities.forEach((entity) -> {
             entity.tick();
@@ -52,28 +72,4 @@ public class Pong extends Game implements EventHandler<KeyEvent> {
         });
     }
 
-    @Override
-    public void handle(KeyEvent event) {
-        if (null == event.getCode()) {
-            event.consume();
-        } else {
-            switch (event.getCode()) {
-                case UP:
-                    player2.up();
-                    break;
-                case DOWN:
-                    player2.down();
-                    break;
-                case W:
-                    player.up();
-                    break;
-                case S:
-                    player.down();
-                    break;
-                default:
-                    event.consume();
-                    break;
-            }
-        }
-    }
 }

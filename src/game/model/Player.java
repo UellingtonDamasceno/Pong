@@ -1,18 +1,20 @@
 package game.model;
 
 import java.util.Observable;
+import java.util.function.Function;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import model.Entity;
+import model.ControllableEntity;
 
 /**
  *
  * @author Uellington Conceição
  * @sice 09/05/2020
  */
-public class Player extends Entity {
+public class Player extends ControllableEntity {
 
     private Rectangle2D rectangle;
     private final double offset;
@@ -33,20 +35,28 @@ public class Player extends Entity {
         graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 
-    public void up() {
-        if (this.referencePoints[1].getY() >= offset) {
-            for (int i = 0; i < referencePoints.length; i++) {
-                referencePoints[i] = referencePoints[i].subtract(0, offset);
+    @Override
+    protected Function up() {
+        return (Object t) -> {
+            if (referencePoints[1].getY() >= offset) {
+                for (int i = 0; i < referencePoints.length; i++) {
+                    referencePoints[i] = referencePoints[i].subtract(0, offset);
+                }
             }
-        }
+            return t;
+        };
     }
 
-    public void down() {
-        if (this.referencePoints[7].getY() <= 250 - offset) {
-            for (int i = 0; i < referencePoints.length; i++) {
-                referencePoints[i] = referencePoints[i].add(0, offset);
+    @Override
+    protected Function down() {
+        return (Object t) -> {
+            if (referencePoints[7].getY() <= 250 - offset) {
+                for (int i = 0; i < referencePoints.length; i++) {
+                    referencePoints[i] = referencePoints[i].add(0, offset);
+                }
             }
-        }
+            return t;
+        };
     }
 
     @Override

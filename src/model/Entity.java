@@ -56,4 +56,9 @@ public abstract class Entity extends Observable implements Observer {
 
     @Override
     public abstract void update(Observable o, Object o1);
+    
+    @Override
+    public String toString(){
+        return "entity: {point"+this.originPoint+"}";
+    }
 }
