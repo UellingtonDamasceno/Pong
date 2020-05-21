@@ -1,4 +1,4 @@
-package games.pong.model;
+package game.model;
 
 import java.util.Observable;
 import javafx.geometry.Point2D;

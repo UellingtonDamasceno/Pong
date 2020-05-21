@@ -38,7 +38,7 @@ public class GameLoop implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
 
-        long now = 0;
+        long now;
 
         while (isRunning) {
             now = System.nanoTime();

@@ -1,4 +1,4 @@
-package games.pong.model;
+package game.model;
 
 import java.util.LinkedList;
 import java.util.List;

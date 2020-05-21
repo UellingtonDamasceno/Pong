@@ -1,6 +1,6 @@
 package view;
 
-import games.pong.model.Pong;
+import game.model.Pong;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
