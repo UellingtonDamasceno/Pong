@@ -102,7 +102,7 @@ public class Ball extends Entity {
 
     @Override
     public void render(GraphicsContext graphic) {
-        graphic.setFill(Color.YELLOWGREEN);
+        graphic.setFill(Color.CHARTREUSE);
         graphic.fillOval(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 

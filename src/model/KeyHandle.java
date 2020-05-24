@@ -58,11 +58,11 @@ public class KeyHandle implements EventHandler<KeyEvent> {
     }
 
     private void keyPressHandle() {
-        this.relationship.get(keyCode).forEach(entity -> entity.handle(keyCode));
+        this.relationship.get(keyCode).forEach(entity -> entity.keyPressed(keyCode));
     }
 
     private void keyReleasedHandle() {
-//        this.relationship.get(keyCode).forEach(entity -> entity.handle(keyCode));
+        this.relationship.get(keyCode).forEach(entity -> entity.keyReleased(keyCode));
     }
 
     @Override

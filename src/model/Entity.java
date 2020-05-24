@@ -3,6 +3,7 @@ package model;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -12,8 +13,10 @@ import javafx.scene.paint.Color;
  * @since 09/05/2020
  */
 public abstract class Entity extends Observable implements Observer {
+
     protected Point2D originPoint;
     protected Point2D[] referencePoints;
+    protected Rectangle2D rectangle;
     protected double width, height;
 
     public Entity(double x, double y, double width, double height) {
@@ -22,6 +25,8 @@ public abstract class Entity extends Observable implements Observer {
         this.originPoint = new Point2D(x, y);
         this.referencePoints = new Point2D[9];
         this.calculeReferencePoint(x, y, width, height);
+        this.rectangle = new Rectangle2D(x, y, width, height);
+
     }
 
     public abstract void tick();
@@ -36,10 +41,14 @@ public abstract class Entity extends Observable implements Observer {
         }
     }
 
-    public final void setPosition(Point2D point){
-        this.calculeReferencePoint(point.getX(), point.getY(), this.width, this.height);
+    public final void setPosition(double x, double y){
+        this.calculeReferencePoint(x, y, width, height);
     }
     
+    public final void setPosition(Point2D point) {
+        this.calculeReferencePoint(point.getX(), point.getY(), this.width, this.height);
+    }
+
     private void calculeReferencePoint(double x, double y, double width, double height) {
         this.referencePoints[2] = new Point2D((x + width), y);//9
         this.referencePoints[5] = new Point2D((x + width), y + (height / 2));//6
@@ -56,9 +65,9 @@ public abstract class Entity extends Observable implements Observer {
 
     @Override
     public abstract void update(Observable o, Object o1);
-    
+
     @Override
-    public String toString(){
-        return "entity: {point"+this.originPoint+"}";
+    public String toString() {
+        return "entity: {point" + this.originPoint + "}";
     }
 }

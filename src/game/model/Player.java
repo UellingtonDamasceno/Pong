@@ -1,11 +1,10 @@
 package game.model;
 
 import java.util.Observable;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import model.ControllableEntity;
 
@@ -16,17 +15,19 @@ import model.ControllableEntity;
  */
 public class Player extends ControllableEntity {
 
-    private Rectangle2D rectangle;
-    private final double offset;
-
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);
-        this.rectangle = new Rectangle2D(x, y, width, height);
-        this.offset = 5;
     }
 
     @Override
     public void tick() {
+        if (this.up && referencePoints[1].getY() >= offset) {
+            this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() - this.offset);
+        } else if (this.down && referencePoints[7].getY() <= 250 - offset) {
+            this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() + this.offset);
+        } else {
+
+        }
     }
 
     @Override
@@ -36,26 +37,18 @@ public class Player extends ControllableEntity {
     }
 
     @Override
-    protected Function up() {
+    protected Consumer up() {
         return (Object t) -> {
-            if (referencePoints[1].getY() >= offset) {
-                for (int i = 0; i < referencePoints.length; i++) {
-                    referencePoints[i] = referencePoints[i].subtract(0, offset);
-                }
-            }
-            return t;
+            this.up = true;
+            this.down = false;
         };
     }
 
     @Override
-    protected Function down() {
+    protected Consumer down() {
         return (Object t) -> {
-            if (referencePoints[7].getY() <= 250 - offset) {
-                for (int i = 0; i < referencePoints.length; i++) {
-                    referencePoints[i] = referencePoints[i].add(0, offset);
-                }
-            }
-            return t;
+            this.down = true;
+            this.up = false;
         };
     }
 

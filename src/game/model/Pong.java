@@ -27,18 +27,13 @@ public class Pong extends Game {
         this.player2 = new Player(this.WIDTH - 20, this.HEIGHT / 2 - 20, 10, 40);
         this.ball = new Ball(this.WIDTH / 2, this.HEIGHT / 2, 10, 10);
 
-        this.ball.addObserver(player);
-        this.ball.addObserver(player2);
+        player.addAction(KeyCode.W, player.up());
+        player.addAction(KeyCode.S, player.down());
 
-        Map codes = new HashMap();
-        codes.put(KeyCode.W, player.up());
-        codes.put(KeyCode.S, player.down());
-        player.setActionMap(codes);
+        player2.addAction(KeyCode.UP, player2.up());
+        player2.addAction(KeyCode.DOWN, player2.down());
         
-        codes = new HashMap();
-        codes.put(KeyCode.UP, player2.up());
-        codes.put(KeyCode.DOWN, player2.down());
-        player2.setActionMap(codes);
+        this.ball.addObserver(player2);
 
         this.entities = new LinkedList();
 
