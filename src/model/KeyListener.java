@@ -15,16 +15,15 @@ import javafx.scene.input.KeyEvent;
  * @author Uellington Damasceno
  * @since 20/05/2020
  */
-public class KeyHandle implements EventHandler<KeyEvent> {
+public class KeyListener implements EventHandler<KeyEvent> {
 
     private Map<KeyCode, List<ControllableEntity>> relationship;
-    private List<ControllableEntity> controllableEntities;
 
     private KeyCode keyCode;
 
-    public KeyHandle(List<Entity> entities) {
-        this.controllableEntities = this.getAllControllableEntities(entities);
-        this.relationship = this.getSubscribers(this.controllableEntities);
+    public KeyListener(List<Entity> entities) {
+        List controllableEntities = this.getAllControllableEntities(entities);
+        this.relationship = this.getSubscribers(controllableEntities);
     }
 
     private List<ControllableEntity> getAllControllableEntities(List<Entity> entities) {

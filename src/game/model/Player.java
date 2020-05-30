@@ -15,10 +15,21 @@ import model.ControllableEntity;
  */
 public class Player extends ControllableEntity {
 
+    private int points;
+    
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);
+        this.points = 0;
+    }
+    
+    public int getPoint(){
+        return this.points;
     }
 
+    public void addPoints(int points){
+        this.points += points;
+    }
+    
     @Override
     public void tick() {
         if (this.up && referencePoints[1].getY() >= offset) {

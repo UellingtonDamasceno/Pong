@@ -1,5 +1,6 @@
 package model;
 
+import game.model.UserInterface;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -16,11 +17,14 @@ public abstract class Game {
     protected final double WIDTH = 500;
     protected final double HEIGHT = 250;
 
+    protected UserInterface userInterface;
+
     private final Canvas canvas;
     protected GraphicsContext graphic;
-    
+
     public Game(String name) {
         this.name = name;
+        this.userInterface = new UserInterface(this.WIDTH, this.HEIGHT);
         this.canvas = new Canvas(WIDTH, HEIGHT);
         this.graphic = this.canvas.getGraphicsContext2D();
     }
@@ -33,8 +37,8 @@ public abstract class Game {
         return this.canvas;
     }
 
-    public abstract KeyHandle getKeyHandle();
-    
+    public abstract KeyListener getKeyListener();
+
     public abstract void update();
 
     public final void clear() {

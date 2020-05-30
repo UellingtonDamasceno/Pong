@@ -1,13 +1,11 @@
 package game.model;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javafx.scene.input.KeyCode;
 import model.Game;
 import model.Entity;
-import model.KeyHandle;
+import model.KeyListener;
 
 /**
  *
@@ -16,7 +14,8 @@ import model.KeyHandle;
 public class Pong extends Game {
 
     private final List<Entity> entities;
-    private final KeyHandle keyHandle;
+    private final KeyListener keyHandle;
+
     private final Player player;
     private final Player player2;
     private final Ball ball;
@@ -32,17 +31,16 @@ public class Pong extends Game {
 
         player2.addAction(KeyCode.UP, player2.up());
         player2.addAction(KeyCode.DOWN, player2.down());
-        
+
+        this.ball.addObserver(player);
         this.ball.addObserver(player2);
 
         this.entities = new LinkedList();
 
-        this.entities.add(new Separator(WIDTH / 2, 0, 10, this.HEIGHT));
         this.entities.add(player);
-        this.entities.add(ball);
         this.entities.add(player2);
-        this.keyHandle = new KeyHandle(this.entities);
-
+        this.entities.add(ball);
+        this.keyHandle = new KeyListener(this.entities);
     }
 
     public void addEntity(Entity entity) {
@@ -54,12 +52,13 @@ public class Pong extends Game {
     }
 
     @Override
-    public KeyHandle getKeyHandle() {
+    public KeyListener getKeyListener() {
         return this.keyHandle;
     }
 
     @Override
     public void update() {
+        this.userInterface.render(graphic);
         this.entities.forEach((entity) -> {
             entity.tick();
             entity.render(graphic);

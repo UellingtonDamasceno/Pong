@@ -15,15 +15,17 @@ import util.Settings.Direction;
 public class Ball extends Entity {
 
     private final Random drawer;
-    private double dx, dy, speed, currentAngle;
+    private double dx, dy, currentAngle;
+    private final double speed;
     private Direction direction;
-    private boolean collided;
+    private boolean collided, initialState;
+    private int count;
 
     public Ball(double x, double y, double width, double height) {
         super(x, y, width, height);
         this.drawer = new Random();
-        this.collided = false;
         this.speed = 1.5;
+        this.collided = false;
         this.drawInitialDirection();
     }
 
@@ -33,6 +35,8 @@ public class Ball extends Entity {
         this.direction = (isRight) ? Direction.EAST : Direction.WEAST;
         this.currentAngle = draw(direction, isTop);
         this.calculeAndUpdateDirectionsVector(currentAngle);
+        this.initialState = true;
+        this.count = 0;
     }
 
     private double draw(Direction direction) {
@@ -60,10 +64,6 @@ public class Ball extends Entity {
         return this.direction;
     }
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
     public void collided() {
         this.collided = true;
     }
@@ -81,17 +81,22 @@ public class Ball extends Entity {
             this.currentAngle = this.draw(this.direction);
             this.calculeAndUpdateDirectionsVector(currentAngle);
             this.collided = false;
+            this.initialState = false;
+            this.count = 0;
         } else if (px >= 500 - this.width) {
-            this.drawInitialDirection();
             this.setPosition(this.originPoint);
+            this.drawInitialDirection();
         } else if (px <= 0) {
-            this.drawInitialDirection();
             this.setPosition(this.originPoint);
+            this.drawInitialDirection();
         }
 
         this.move(dx * speed, dy * speed);
-        this.setChanged();
-        this.notifyObservers(this.referencePoints);
+        this.count++;
+        if ((this.initialState && count >= 125) || (!this.initialState && count >= 270)) {
+            this.setChanged();
+            this.notifyObservers(this.referencePoints);
+        }
     }
 
     private void move(double x, double y) {
