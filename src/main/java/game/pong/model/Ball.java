@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import penguine.game.model.Entity;
 import game.pong.util.Settings.Direction;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Paint;
 import penguine.game.base.Measurable;
 
 /**
@@ -28,7 +29,6 @@ public class Ball extends Entity {
         this.speed = 1.5;
         this.collided = false;
         this.limits = limits;
-        this.drawInitialDirection();
     }
 
     public Point2D[] getReferencePoints() {
@@ -107,7 +107,7 @@ public class Ball extends Entity {
 
     @Override
     public void renderHook(GraphicsContext graphic) {
-        graphic.setFill(Color.CHARTREUSE);
+        graphic.setFill(Paint.valueOf("#08FB09"));
         graphic.fillOval(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 

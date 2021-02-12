@@ -1,5 +1,6 @@
 package game.pong.util;
 
+import game.pong.model.Pong;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -34,17 +35,27 @@ public class PointsUtils {
         return referencePoints;
     }
 
-    public static void showReferencePoints(Measurable mensurable, GraphicsContext graphic) {
-        PointsUtils.showReferencePoints(mensurable, graphic, Color.RED);
+    public static void showReferencePoints(Measurable measurable, GraphicsContext graphic) {
+        PointsUtils.showReferencePoints(measurable, graphic, Color.RED);
     }
 
-    public static void showReferencePoints(Measurable mensurable, GraphicsContext graphic, Paint color) {
-        var referencePoints = PointsUtils.getReferencePoints(mensurable);
+    public static void showReferencePoints(Measurable measurable, GraphicsContext graphic, Paint color) {
+        var referencePoints = PointsUtils.getReferencePoints(measurable);
         graphic.save();
         graphic.setFill(color);
         for (var referencesPoint : referencePoints) {
             graphic.fillOval(referencesPoint.getX() - 2.5, referencesPoint.getY() - 2.5, 5, 5);
         }
         graphic.restore();
+    }
+
+    public static Point2D alignCenter(Measurable object, double size) {
+        return PointsUtils.alignCenter(object, size, size);
+    }
+
+    public static Point2D alignCenter(Measurable object, double xSize, double ySize) {
+        double x = (object.getX() / 2) - (xSize / 2);
+        double y = (object.getY() / 2) - (ySize / 2);
+        return new Point2D(x, y);
     }
 }

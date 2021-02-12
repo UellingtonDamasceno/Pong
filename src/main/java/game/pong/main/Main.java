@@ -1,6 +1,5 @@
 package game.pong.main;
 
-import game.pong.model.Player;
 import game.pong.model.Pong;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,7 +24,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Pong pong = new Pong("Pong");
         pong.initialize();
-        GameLoop gameLoop = new GameLoop(pong);
+        GameLoop gameLoop = new GameLoop(pong, 90);
         BorderPane borderPane = new BorderPane();
         // Label label = new Label("X : 0 || Y : 0");
         //

@@ -1,13 +1,14 @@
 package game.pong.ui;
 
+import game.pong.util.PointsUtils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import penguine.game.base.Drawable;
 import penguine.game.base.Measurable;
@@ -17,7 +18,7 @@ import penguine.game.base.Measurable;
  * @author Uellington Damasceno
  * @since 24/05/2020
  */
-public class UserInterface implements Observer {
+public class UserInterface {
 
     private Font font;
     private Measurable limits;
@@ -35,21 +36,28 @@ public class UserInterface implements Observer {
     }
 
     public void render(GraphicsContext graphic) {
-        graphic.setFill(Color.WHITE);
+        Paint color = Paint.valueOf("#08FB09");
+        graphic.setFill(color);
+        graphic.setStroke(color);
+
+        double centerLine = 5;
+        graphic.fillRect((limits.getX() / 2) - centerLine / 2,
+                0, centerLine, limits.getY());
+
+        double circleSize = 20;
+        Point2D centerPoint = PointsUtils.alignCenter(limits, circleSize);
+
+        graphic.fillOval(centerPoint.getX(), centerPoint.getY(), circleSize, circleSize);
+
+        graphic.strokeRect(limits.getMinX(), limits.getMinY(), limits.getX(), limits.getY());
+
+        graphic.setLineWidth(5);
+        circleSize = 100;
+        centerPoint = PointsUtils.alignCenter(limits, circleSize);
+        graphic.strokeOval(centerPoint.getX(), centerPoint.getY(), circleSize, circleSize);
+
         graphic.setFont(font);
-
         this.components.forEach(drawable -> drawable.render(graphic));
-
-        graphic.fillRect(limits.getX() / 2,
-                0, 10, limits.getY());
-
-        graphic.fillOval(242.5, 112.5, 25, 25);
-        graphic.setStroke(Color.WHITE);
-        graphic.setLineWidth(10);
-        graphic.strokeOval(205, 75, 100, 100);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-    }
 }

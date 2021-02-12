@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import penguine.game.base.Measurable;
 
 /**
@@ -48,7 +48,7 @@ public class Player extends ControllableEntity implements Observer {
 
     @Override
     protected void renderHook(GraphicsContext graphic) {
-        graphic.setFill(Color.WHITE);
+        graphic.setFill(Paint.valueOf("#08FB09"));
         graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 

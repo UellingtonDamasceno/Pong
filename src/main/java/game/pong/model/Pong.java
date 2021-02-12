@@ -29,7 +29,7 @@ public class Pong extends Game implements Observer {
     private final Ball ball;
 
     public Pong(String name) {
-        super(name, 500, 250);
+        super(name, 500, 250, Color.BLACK);
         this.player = new Player(10, this.Y / 2 - 20, 10, 40, this);
         this.player2 = new Player(this.X - 20, this.Y / 2 - 20, 10, 40, this);
         this.ball = new Ball(this.X / 2, this.Y / 2, 10, 10, this);
@@ -47,6 +47,8 @@ public class Pong extends Game implements Observer {
 
         this.ball.addObserver(this);
 
+        this.ball.drawInitialDirection();
+        
         this.entities = new LinkedList();
         this.entities.add(player);
         this.entities.add(player2);
@@ -55,8 +57,8 @@ public class Pong extends Game implements Observer {
         this.keyHandle = new KeyListener(this.entities);
         this.userInterface = new UserInterface(this);
 
-        UIText playerOnePoint = new UIText("0", 100, 50, Color.WHITE);
-        UIText playerTwoPoint = new UIText("0", 350, 50, Color.WHITE);
+        UIText playerOnePoint = new UIText("0", 100, 25, Color.WHITE);
+        UIText playerTwoPoint = new UIText("0", 350, 25, Color.WHITE);
 
         this.player.getPoint().addListener((ov, t, t1) -> {
             playerOnePoint.setText(t1.toString());
@@ -67,8 +69,6 @@ public class Pong extends Game implements Observer {
 
         this.userInterface.addComponent(playerOnePoint);
         this.userInterface.addComponent(playerTwoPoint);
-        this.userInterface.addComponent(new UIText("Player 1", 100, 25));
-        this.userInterface.addComponent(new UIText("Player 2", 350, 25));
     }
 
     public void addEntity(Entity entity) {
