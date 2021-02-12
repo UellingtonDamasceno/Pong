@@ -1,13 +1,14 @@
-package game.model;
+package game.pong.model;
 
+import game.pong.input.KeyListener;
+import game.pong.ui.UserInterface;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.scene.input.KeyCode;
-import model.Game;
-import model.Entity;
-import model.KeyListener;
+import penguine.game.model.Game;
+import penguine.game.model.Entity;
 
 /**
  *
@@ -18,16 +19,16 @@ public class Pong extends Game implements Observer {
     private List<Entity> entities;
     private KeyListener keyHandle;
 
+    private UserInterface userInterface;
     private final Player player;
     private final Player player2;
     private final Ball ball;
 
     public Pong(String name) {
-        super(name);
-        this.player = new Player(10, this.HEIGHT / 2 - 20, 10, 40);
-        this.player2 = new Player(this.WIDTH - 20, this.HEIGHT / 2 - 20, 10, 40);
-        this.ball = new Ball(this.WIDTH / 2, this.HEIGHT / 2, 10, 10);
-
+        super(name, 500, 250);
+        this.player = new Player(10, this.Y / 2 - 20, 10, 40, this);
+        this.player2 = new Player(this.X - 20, this.Y / 2 - 20, 10, 40, this);
+        this.ball = new Ball(this.X / 2, this.Y / 2, 10, 10, this);
     }
 
     public void initialize() {
@@ -48,6 +49,7 @@ public class Pong extends Game implements Observer {
         this.entities.add(ball);
 
         this.keyHandle = new KeyListener(this.entities);
+        this.userInterface = new UserInterface(this);
     }
 
     public void addEntity(Entity entity) {
@@ -58,7 +60,6 @@ public class Pong extends Game implements Observer {
         this.entities.remove(entity);
     }
 
-    @Override
     public KeyListener getKeyListener() {
         return this.keyHandle;
     }
@@ -67,7 +68,7 @@ public class Pong extends Game implements Observer {
     public void update() {
         this.userInterface.render(graphic);
         this.entities.forEach((entity) -> {
-            entity.tick();
+            entity.update();
             entity.render(graphic);
         });
     }

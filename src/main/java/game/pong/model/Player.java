@@ -1,4 +1,4 @@
-package game.model;
+package game.pong.model;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -7,20 +7,21 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.ControllableEntity;
+import penguine.game.base.Mensurable;
 
 /**
  *
  * @author Uellington Conceição
- * @sice 09/05/2020
  */
 public class Player extends ControllableEntity implements Observer {
 
     private int points;
+    private Mensurable limits;
     
-    public Player(double x, double y, double width, double height) {
+    public Player(double x, double y, double width, double height, Mensurable limits) {
         super(x, y, width, height);
         this.points = 0;
+        this.limits = limits;
     }
     
     public int getPoint(){
@@ -32,10 +33,10 @@ public class Player extends ControllableEntity implements Observer {
     }
     
     @Override
-    public void tick() {
+    public void update() {
         if (this.up && referencePoints[1].getY() >= offset) {
             this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() - this.offset);
-        } else if (this.down && referencePoints[7].getY() <= 250 - offset) {
+        } else if (this.down && referencePoints[7].getY() <= this.limits.getY() - offset) {
             this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() + this.offset);
         } else {
 

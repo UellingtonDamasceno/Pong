@@ -1,11 +1,11 @@
-package view;
+package game.pong.main;
 
-import game.model.Pong;
+import game.pong.model.Pong;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.GameLoop;
+import penguine.game.loop.GameLoop;
 
 /**
  *

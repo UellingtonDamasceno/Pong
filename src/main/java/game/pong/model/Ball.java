@@ -1,15 +1,15 @@
-package game.model;
+package game.pong.model;
 
 import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.Entity;
-import util.Settings.Direction;
+import penguine.game.model.Entity;
+import game.pong.util.Settings.Direction;
+import penguine.game.base.Mensurable;
 
 /**
  *
  * @author Uellington Conceição
- * @since 10/05/2020
  */
 public class Ball extends Entity {
 
@@ -18,13 +18,15 @@ public class Ball extends Entity {
     private final double speed;
     private Direction direction;
     private boolean collided, initialState;
+    private Mensurable limits;
     private int count;
 
-    public Ball(double x, double y, double width, double height) {
+    public Ball(double x, double y, double width, double height, Mensurable limits) {
         super(x, y, width, height);
         this.drawer = new Random();
         this.speed = 1.5;
         this.collided = false;
+        this.limits = limits;
         this.drawInitialDirection();
     }
 
@@ -69,12 +71,12 @@ public class Ball extends Entity {
     }
 
     @Override
-    public void tick() {
+    public void update() {
         double px = this.referencePoints[0].getX();
         double py = this.referencePoints[0].getY();
 
         double nextPositionY = py + (dy * speed);
-        if (nextPositionY + this.height >= 250 || nextPositionY < 0) {
+        if (nextPositionY + this.height >= this.limits.getY() || nextPositionY < this.limits.getMinY()) {
             this.dy *= -1;
         } else if (this.collided) {
             this.direction = this.direction.getOpposite();
@@ -83,10 +85,10 @@ public class Ball extends Entity {
             this.collided = false;
             this.initialState = false;
             this.count = 0;
-        } else if (px >= 500 - this.width) {
+        } else if (px >= this.limits.getX() - this.width) {
             this.drawInitialDirection();
 
-        } else if (px <= 0) {
+        } else if (px <= this.limits.getMinX()) {
             this.drawInitialDirection();
         }
 

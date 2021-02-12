@@ -1,9 +1,8 @@
-package game.model;
+package game.pong.model;
 
 import java.util.Observable;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import penguine.game.base.Mensurable;
 
 /**
  *
@@ -13,12 +12,12 @@ public class Enemy extends Player {
 
     private Point2D[] ballReferencePoints;
 
-    public Enemy(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public Enemy(double x, double y, double width, double height, Mensurable limits) {
+        super(x, y, width, height, limits);
     }
 
     @Override
-    public void tick() {
+    public void update() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

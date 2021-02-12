@@ -1,4 +1,4 @@
-package game.ui;
+package game.pong.ui;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,7 +9,8 @@ import java.util.Observer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import model.Drawable;
+import penguine.game.base.Drawable;
+import penguine.game.base.Mensurable;
 
 /**
  *
@@ -19,14 +20,13 @@ import model.Drawable;
 public class UserInterface implements Observer {
 
     private Font font;
-    private final double width, height;
+    private Mensurable limits;
     private List<Drawable> components;
 
-    public UserInterface(double width, double height) {
-        this.width = width;
-        this.height = height;
+    public UserInterface(Mensurable limits) {
         this.components = new ArrayList();
-        Path path = Paths.get("src", "main", "java", "game", "ui", "fonts", "Imagine.ttf");
+        this.limits = limits;
+        Path path = Paths.get("src", "main", "java", "game", "pong", "ui", "fonts", "Imagine.ttf");
         this.font = Font.loadFont(path.toUri().toString(), 15);
     }
 
@@ -39,8 +39,8 @@ public class UserInterface implements Observer {
         graphic.setFont(font);
         graphic.fillText("Player 1", 100, 25);
         graphic.fillText("Player 2", 350, 25);
-        graphic.fillRect(width / 2,
-                0, 10, height);
+        graphic.fillRect(limits.getX() / 2,
+                0, 10, limits.getY());
         graphic.fillOval(242.5, 112.5, 25, 25);
         graphic.setStroke(Color.WHITE);
         graphic.setLineWidth(10);

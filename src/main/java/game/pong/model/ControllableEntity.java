@@ -1,4 +1,4 @@
-package model;
+package game.pong.model;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import javafx.scene.input.KeyCode;
+import penguine.game.model.Entity;
 
 /**
  *
  * @author Uellington Damasceno
- * @since 21/05/2020
  */
 public abstract class ControllableEntity extends Entity {
 

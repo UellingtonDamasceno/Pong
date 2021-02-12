@@ -1,4 +1,4 @@
-package model;
+package game.pong.input;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,11 +9,12 @@ import java.util.stream.Collectors;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import game.pong.model.ControllableEntity;
+import penguine.game.model.Entity;
 
 /**
  *
  * @author Uellington Damasceno
- * @since 20/05/2020
  */
 public class KeyListener implements EventHandler<KeyEvent> {
 
