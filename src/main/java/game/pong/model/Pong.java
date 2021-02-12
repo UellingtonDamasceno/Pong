@@ -2,11 +2,15 @@ package game.pong.model;
 
 import game.pong.input.KeyListener;
 import game.pong.ui.UserInterface;
+import game.pong.ui.components.UIText;
+import game.pong.util.Settings.Direction;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import penguine.game.model.Game;
 import penguine.game.model.Entity;
 
@@ -50,6 +54,21 @@ public class Pong extends Game implements Observer {
 
         this.keyHandle = new KeyListener(this.entities);
         this.userInterface = new UserInterface(this);
+
+        UIText playerOnePoint = new UIText("0", 100, 50, Color.WHITE);
+        UIText playerTwoPoint = new UIText("0", 350, 50, Color.WHITE);
+
+        this.player.getPoint().addListener((ov, t, t1) -> {
+            playerOnePoint.setText(t1.toString());
+        });
+        this.player2.getPoint().addListener((ov, t, t1) -> {
+            playerTwoPoint.setText(t1.toString());
+        });
+
+        this.userInterface.addComponent(playerOnePoint);
+        this.userInterface.addComponent(playerTwoPoint);
+        this.userInterface.addComponent(new UIText("Player 1", 100, 25));
+        this.userInterface.addComponent(new UIText("Player 2", 350, 25));
     }
 
     public void addEntity(Entity entity) {
@@ -75,6 +94,18 @@ public class Pong extends Game implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (o instanceof Ball) {
+            double ballCurrentX = (this.ball.getDirection() == Direction.EAST)
+                    ? this.ball.getReferencePoints()[5].getX()
+                    : this.ball.getReferencePoints()[3].getX();
+            if (ballCurrentX >= this.getX()) {
+                this.player.addPoints(1);
+                this.ball.drawInitialDirection();
+            } else if (ballCurrentX <= this.getMinX()) {
+                this.player2.addPoints(1);
+                this.ball.drawInitialDirection();
+            }
+        }
     }
 
 }

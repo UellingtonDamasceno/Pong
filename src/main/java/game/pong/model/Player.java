@@ -3,11 +3,12 @@ package game.pong.model;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.function.Consumer;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import penguine.game.base.Mensurable;
+import penguine.game.base.Measurable;
 
 /**
  *
@@ -15,23 +16,25 @@ import penguine.game.base.Mensurable;
  */
 public class Player extends ControllableEntity implements Observer {
 
-    private int points;
-    private Mensurable limits;
-    
-    public Player(double x, double y, double width, double height, Mensurable limits) {
+    private SimpleIntegerProperty points;
+    private Measurable limits;
+
+    public Player(double x, double y, double width, double height, Measurable limits) {
         super(x, y, width, height);
-        this.points = 0;
+        this.points = new SimpleIntegerProperty(0);
         this.limits = limits;
     }
-    
-    public int getPoint(){
+
+    public SimpleIntegerProperty getPoint() {
         return this.points;
     }
 
-    public void addPoints(int points){
-        this.points += points;
+    public void addPoints(int point) {
+        int pontuation = this.points.get();
+        pontuation += point;
+        this.points.set(pontuation);
     }
-    
+
     @Override
     public void update() {
         if (this.up && referencePoints[1].getY() >= offset) {
@@ -44,7 +47,7 @@ public class Player extends ControllableEntity implements Observer {
     }
 
     @Override
-    public void render(GraphicsContext graphic) {
+    protected void renderHook(GraphicsContext graphic) {
         graphic.setFill(Color.WHITE);
         graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }

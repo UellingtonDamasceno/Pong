@@ -10,7 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import penguine.game.base.Drawable;
-import penguine.game.base.Mensurable;
+import penguine.game.base.Measurable;
 
 /**
  *
@@ -20,27 +20,29 @@ import penguine.game.base.Mensurable;
 public class UserInterface implements Observer {
 
     private Font font;
-    private Mensurable limits;
+    private Measurable limits;
     private List<Drawable> components;
 
-    public UserInterface(Mensurable limits) {
+    public UserInterface(Measurable limits) {
         this.components = new ArrayList();
         this.limits = limits;
         Path path = Paths.get("src", "main", "java", "game", "pong", "ui", "fonts", "Imagine.ttf");
         this.font = Font.loadFont(path.toUri().toString(), 15);
     }
 
-    public void addChildren(Drawable drawable) {
+    public void addComponent(Drawable drawable) {
         this.components.add(drawable);
     }
 
     public void render(GraphicsContext graphic) {
         graphic.setFill(Color.WHITE);
         graphic.setFont(font);
-        graphic.fillText("Player 1", 100, 25);
-        graphic.fillText("Player 2", 350, 25);
+
+        this.components.forEach(drawable -> drawable.render(graphic));
+
         graphic.fillRect(limits.getX() / 2,
                 0, 10, limits.getY());
+
         graphic.fillOval(242.5, 112.5, 25, 25);
         graphic.setStroke(Color.WHITE);
         graphic.setLineWidth(10);

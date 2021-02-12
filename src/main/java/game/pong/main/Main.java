@@ -1,5 +1,6 @@
 package game.pong.main;
 
+import game.pong.model.Player;
 import game.pong.model.Pong;
 import javafx.application.Application;
 import javafx.scene.Scene;

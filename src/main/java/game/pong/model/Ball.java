@@ -5,7 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import penguine.game.model.Entity;
 import game.pong.util.Settings.Direction;
-import penguine.game.base.Mensurable;
+import javafx.geometry.Point2D;
+import penguine.game.base.Measurable;
 
 /**
  *
@@ -18,10 +19,10 @@ public class Ball extends Entity {
     private final double speed;
     private Direction direction;
     private boolean collided, initialState;
-    private Mensurable limits;
+    private Measurable limits;
     private int count;
 
-    public Ball(double x, double y, double width, double height, Mensurable limits) {
+    public Ball(double x, double y, double width, double height, Measurable limits) {
         super(x, y, width, height);
         this.drawer = new Random();
         this.speed = 1.5;
@@ -30,7 +31,19 @@ public class Ball extends Entity {
         this.drawInitialDirection();
     }
 
-    private void drawInitialDirection() {
+    public Point2D[] getReferencePoints() {
+        return this.referencePoints;
+    }
+
+    public Direction getDirection() {
+        return this.direction;
+    }
+
+    public void collided() {
+        this.collided = true;
+    }
+
+    public void drawInitialDirection() {
         this.setPosition(this.originPoint);
         boolean isRight = drawer.nextBoolean();
         boolean isTop = drawer.nextBoolean();
@@ -62,17 +75,8 @@ public class Ball extends Entity {
         this.dy = Math.sin(angle);
     }
 
-    public Direction getDirection() {
-        return this.direction;
-    }
-
-    public void collided() {
-        this.collided = true;
-    }
-
     @Override
     public void update() {
-        double px = this.referencePoints[0].getX();
         double py = this.referencePoints[0].getY();
 
         double nextPositionY = py + (dy * speed);
@@ -85,12 +89,7 @@ public class Ball extends Entity {
             this.collided = false;
             this.initialState = false;
             this.count = 0;
-        } else if (px >= this.limits.getX() - this.width) {
-            this.drawInitialDirection();
-
-        } else if (px <= this.limits.getMinX()) {
-            this.drawInitialDirection();
-        }
+        } 
 
         this.move(dx * speed, dy * speed);
         this.count++;
@@ -107,7 +106,7 @@ public class Ball extends Entity {
     }
 
     @Override
-    public void render(GraphicsContext graphic) {
+    public void renderHook(GraphicsContext graphic) {
         graphic.setFill(Color.CHARTREUSE);
         graphic.fillOval(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }

@@ -2,7 +2,7 @@ package game.pong.model;
 
 import java.util.Observable;
 import javafx.geometry.Point2D;
-import penguine.game.base.Mensurable;
+import penguine.game.base.Measurable;
 
 /**
  *
@@ -12,7 +12,7 @@ public class Enemy extends Player {
 
     private Point2D[] ballReferencePoints;
 
-    public Enemy(double x, double y, double width, double height, Mensurable limits) {
+    public Enemy(double x, double y, double width, double height, Measurable limits) {
         super(x, y, width, height, limits);
     }
 
