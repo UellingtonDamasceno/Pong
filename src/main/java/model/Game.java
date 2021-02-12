@@ -1,6 +1,6 @@
 package model;
 
-import game.model.UserInterface;
+import game.ui.UserInterface;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

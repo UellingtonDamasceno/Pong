@@ -1,4 +1,4 @@
-package game.model;
+package game.ui;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +26,7 @@ public class UserInterface implements Observer {
         this.width = width;
         this.height = height;
         this.components = new ArrayList();
-        Path path = Paths.get("src", "res", "fonts", "Imagine.ttf");
+        Path path = Paths.get("src", "main", "java", "game", "ui", "fonts", "Imagine.ttf");
         this.font = Font.loadFont(path.toUri().toString(), 15);
     }
 
