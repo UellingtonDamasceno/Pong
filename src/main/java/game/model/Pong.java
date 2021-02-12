@@ -2,6 +2,8 @@ package game.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.scene.input.KeyCode;
 import model.Game;
 import model.Entity;
@@ -11,10 +13,10 @@ import model.KeyListener;
  *
  * @author Uellington Conceição
  */
-public class Pong extends Game {
+public class Pong extends Game implements Observer {
 
-    private final List<Entity> entities;
-    private final KeyListener keyHandle;
+    private List<Entity> entities;
+    private KeyListener keyHandle;
 
     private final Player player;
     private final Player player2;
@@ -26,6 +28,9 @@ public class Pong extends Game {
         this.player2 = new Player(this.WIDTH - 20, this.HEIGHT / 2 - 20, 10, 40);
         this.ball = new Ball(this.WIDTH / 2, this.HEIGHT / 2, 10, 10);
 
+    }
+
+    public void initialize() {
         player.addAction(KeyCode.W, player.up());
         player.addAction(KeyCode.S, player.down());
 
@@ -35,11 +40,13 @@ public class Pong extends Game {
         this.ball.addObserver(player);
         this.ball.addObserver(player2);
 
-        this.entities = new LinkedList();
+        this.ball.addObserver(this);
 
+        this.entities = new LinkedList();
         this.entities.add(player);
         this.entities.add(player2);
         this.entities.add(ball);
+
         this.keyHandle = new KeyListener(this.entities);
     }
 
@@ -62,8 +69,11 @@ public class Pong extends Game {
         this.entities.forEach((entity) -> {
             entity.tick();
             entity.render(graphic);
-//            entity.showReferencePoints(graphic);
         });
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
     }
 
 }

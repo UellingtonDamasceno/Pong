@@ -1,6 +1,5 @@
 package game.model;
 
-import java.util.Observable;
 import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -30,6 +29,7 @@ public class Ball extends Entity {
     }
 
     private void drawInitialDirection() {
+        this.setPosition(this.originPoint);
         boolean isRight = drawer.nextBoolean();
         boolean isTop = drawer.nextBoolean();
         this.direction = (isRight) ? Direction.EAST : Direction.WEAST;
@@ -84,10 +84,9 @@ public class Ball extends Entity {
             this.initialState = false;
             this.count = 0;
         } else if (px >= 500 - this.width) {
-            this.setPosition(this.originPoint);
             this.drawInitialDirection();
+
         } else if (px <= 0) {
-            this.setPosition(this.originPoint);
             this.drawInitialDirection();
         }
 
@@ -109,10 +108,6 @@ public class Ball extends Entity {
     public void render(GraphicsContext graphic) {
         graphic.setFill(Color.CHARTREUSE);
         graphic.fillOval(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
-    }
-
-    @Override
-    public void update(Observable o, Object o1) {
     }
 
 }

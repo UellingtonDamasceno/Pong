@@ -1,6 +1,7 @@
 package game.model;
 
 import java.util.Observable;
+import java.util.Observer;
 import java.util.function.Consumer;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -13,7 +14,7 @@ import model.ControllableEntity;
  * @author Uellington Conceição
  * @sice 09/05/2020
  */
-public class Player extends ControllableEntity {
+public class Player extends ControllableEntity implements Observer {
 
     private int points;
     
@@ -43,7 +44,7 @@ public class Player extends ControllableEntity {
 
     @Override
     public void render(GraphicsContext graphic) {
-        graphic.setFill(Color.BLACK);
+        graphic.setFill(Color.WHITE);
         graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
     }
 

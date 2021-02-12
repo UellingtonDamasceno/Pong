@@ -23,26 +23,27 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Pong pong = new Pong("Pong");
+        pong.initialize();
         GameLoop gameLoop = new GameLoop(pong);
         BorderPane borderPane = new BorderPane();
-//        Label label = new Label("X : 0 || Y : 0");
-//        
-//        pong.getCanvas().setOnMouseMoved((event) -> {
-//            label.setText("X : "+ event.getX() + " || " + "Y : "+ event.getY());
-//        });
-//        
-//        pong.getCanvas().setOnMouseExited(event -> label.setText("X : 0 || Y : 0"));
-//        
-//        HBox hbox = new HBox(label);
-//        hbox.setAlignment(Pos.CENTER);
+        // Label label = new Label("X : 0 || Y : 0");
+        //
+        // pong.getCanvas().setOnMouseMoved((event) -> {
+        // label.setText("X : "+ event.getX() + " || " + "Y : "+ event.getY());
+        // });
+        //
+        // pong.getCanvas().setOnMouseExited(event -> label.setText("X : 0 || Y : 0"));
+        //
+        // HBox hbox = new HBox(label);
+        // hbox.setAlignment(Pos.CENTER);
 
         borderPane.setCenter(pong.getCanvas());
-//        borderPane.setBottom(hbox);
+        // borderPane.setBottom(hbox);
 
         Scene scene = new Scene(borderPane);
         scene.setOnKeyPressed(pong.getKeyListener());
         scene.setOnKeyReleased(pong.getKeyListener());
-        
+
         primaryStage.setScene(scene);
         primaryStage.setTitle(pong.getName());
         primaryStage.setResizable(false);

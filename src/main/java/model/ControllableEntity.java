@@ -22,7 +22,7 @@ public abstract class ControllableEntity extends Entity {
         super(x, y, width, height);
         this.up = false;
         this.down = false;
-        this.offset = 1;
+        this.offset = 3;
         this.actions = new HashMap();
     }
 

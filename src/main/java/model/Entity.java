@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Observable;
-import java.util.Observer;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,7 +11,7 @@ import javafx.scene.paint.Color;
  * @author Uellington Conceição
  * @since 09/05/2020
  */
-public abstract class Entity extends Observable implements Observer {
+public abstract class Entity extends Observable {
 
     protected Point2D originPoint;
     protected Point2D[] referencePoints;
@@ -41,10 +40,10 @@ public abstract class Entity extends Observable implements Observer {
         }
     }
 
-    public final void setPosition(double x, double y){
+    public final void setPosition(double x, double y) {
         this.calculeReferencePoint(x, y, width, height);
     }
-    
+
     public final void setPosition(Point2D point) {
         this.calculeReferencePoint(point.getX(), point.getY(), this.width, this.height);
     }
@@ -62,9 +61,6 @@ public abstract class Entity extends Observable implements Observer {
         this.referencePoints[4] = new Point2D(x + (width / 2), y + (height / 2));//5
         this.referencePoints[7] = new Point2D(x + (width / 2), (y + height));//2        
     }
-
-    @Override
-    public abstract void update(Observable o, Object o1);
 
     @Override
     public String toString() {
