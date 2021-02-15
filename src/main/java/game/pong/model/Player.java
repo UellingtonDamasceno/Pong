@@ -1,5 +1,6 @@
 package game.pong.model;
 
+import game.pong.util.PointUtils;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.function.Consumer;
@@ -37,10 +38,11 @@ public class Player extends ControllableEntity implements Observer {
 
     @Override
     public void update() {
+        Point2D[] referencePoints = PointUtils.getReferencePoints(this);
         if (this.up && referencePoints[1].getY() >= offset) {
-            this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() - this.offset);
-        } else if (this.down && referencePoints[7].getY() <= this.limits.getY() - offset) {
-            this.setPosition(this.referencePoints[0].getX(), this.referencePoints[0].getY() + this.offset);
+            this.move(referencePoints[0].getX(), referencePoints[0].getY() - this.offset);
+        } else if (this.down && referencePoints[7].getY() <= this.limits.getHeight() - offset) {
+            this.move(referencePoints[0].getX(), referencePoints[0].getY() + this.offset);
         } else {
 
         }
@@ -49,7 +51,8 @@ public class Player extends ControllableEntity implements Observer {
     @Override
     protected void renderHook(GraphicsContext graphic) {
         graphic.setFill(Paint.valueOf("#08FB09"));
-        graphic.fillRect(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
+        Point2D point = PointUtils.getReferencePointByIndex(this, 0);
+        graphic.fillRect(point.getX(), point.getY(), this.width, this.height);
     }
 
     @Override
@@ -71,10 +74,12 @@ public class Player extends ControllableEntity implements Observer {
     @Override
     public void update(Observable o, Object o1) {
         Point2D[] ballReferencePoints = (Point2D[]) o1;
-        if (ballReferencePoints[4].distance(this.referencePoints[4]) <= this.height) {
-            rectangle = new Rectangle2D(this.referencePoints[0].getX(), this.referencePoints[0].getY(), this.width, this.height);
+        Point2D[] referencePoints = PointUtils.getReferencePoints(this);
+        Rectangle2D rectangle;
+        if (ballReferencePoints[4].distance(referencePoints[4]) <= this.height) {
+            rectangle = new Rectangle2D(referencePoints[0].getX(), referencePoints[0].getY(), this.width, this.height);
             for (Point2D referencePoint : ballReferencePoints) {
-                if (this.rectangle.contains(referencePoint)) {
+                if (rectangle.contains(referencePoint)) {
                     ((Ball) o).collided();
                     break;
                 }

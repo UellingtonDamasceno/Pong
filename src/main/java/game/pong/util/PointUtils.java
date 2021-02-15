@@ -1,6 +1,5 @@
 package game.pong.util;
 
-import game.pong.model.Pong;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -11,17 +10,18 @@ import penguine.game.base.Measurable;
  *
  * @author Uellington Damasceno
  */
-public class PointsUtils {
+public class PointUtils {
 
+    
     public static Point2D[] getReferencePoints(Measurable mesurable) {
         var referencePoints = new Point2D[9];
+   
+        double x = mesurable.getX();
+        double y = mesurable.getY();
+        double width = mesurable.getWidth();
+        double height = mesurable.getHeight();
 
-        double x = mesurable.getMinX();
-        double y = mesurable.getMinY();
-        double width = mesurable.getX();
-        double height = mesurable.getY();
-
-        referencePoints[2] = new Point2D((x + width), y);//9
+        referencePoints[2] = new Point2D((x + width), y);//9sw
         referencePoints[5] = new Point2D((x + width), y + (height / 2));//6
         referencePoints[8] = new Point2D((x + width), (y + height));//3
 
@@ -34,13 +34,18 @@ public class PointsUtils {
         referencePoints[7] = new Point2D(x + (width / 2), (y + height));//2 
         return referencePoints;
     }
+    
+    public static Point2D getReferencePointByIndex(Measurable mesurable, int index){
+        index = (index < 0 ) ? 0 : (index > 9) ? 9 : index;
+        return PointUtils.getReferencePoints(mesurable)[index];
+    }
 
     public static void showReferencePoints(Measurable measurable, GraphicsContext graphic) {
-        PointsUtils.showReferencePoints(measurable, graphic, Color.RED);
+        PointUtils.showReferencePoints(measurable, graphic, Color.RED);
     }
 
     public static void showReferencePoints(Measurable measurable, GraphicsContext graphic, Paint color) {
-        var referencePoints = PointsUtils.getReferencePoints(measurable);
+        var referencePoints = PointUtils.getReferencePoints(measurable);
         graphic.save();
         graphic.setFill(color);
         for (var referencesPoint : referencePoints) {
@@ -50,12 +55,12 @@ public class PointsUtils {
     }
 
     public static Point2D alignCenter(Measurable object, double size) {
-        return PointsUtils.alignCenter(object, size, size);
+        return PointUtils.alignCenter(object, size, size);
     }
 
-    public static Point2D alignCenter(Measurable object, double xSize, double ySize) {
-        double x = (object.getX() / 2) - (xSize / 2);
-        double y = (object.getY() / 2) - (ySize / 2);
+    public static Point2D alignCenter(Measurable object, double width, double height) {
+        double x = (object.getWidth() / 2) - (width / 2);
+        double y = (object.getHeight()/ 2) - (height / 2);
         return new Point2D(x, y);
     }
 }

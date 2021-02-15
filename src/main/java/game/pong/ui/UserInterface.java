@@ -1,13 +1,12 @@
 package game.pong.ui;
 
-import game.pong.util.PointsUtils;
+import game.pong.util.PointUtils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import penguine.game.base.Drawable;
@@ -41,19 +40,19 @@ public class UserInterface {
         graphic.setStroke(color);
 
         double centerLine = 5;
-        graphic.fillRect((limits.getX() / 2) - centerLine / 2,
-                0, centerLine, limits.getY());
+        graphic.fillRect((limits.getWidth() / 2) - centerLine / 2,
+                0, centerLine, limits.getHeight());
 
         double circleSize = 20;
-        Point2D centerPoint = PointsUtils.alignCenter(limits, circleSize);
+        Point2D centerPoint = PointUtils.alignCenter(limits, circleSize);
 
         graphic.fillOval(centerPoint.getX(), centerPoint.getY(), circleSize, circleSize);
 
-        graphic.strokeRect(limits.getMinX(), limits.getMinY(), limits.getX(), limits.getY());
+        graphic.strokeRect(limits.getX(), limits.getY(), limits.getWidth(), limits.getHeight());
 
         graphic.setLineWidth(5);
         circleSize = 100;
-        centerPoint = PointsUtils.alignCenter(limits, circleSize);
+        centerPoint = PointUtils.alignCenter(limits, circleSize);
         graphic.strokeOval(centerPoint.getX(), centerPoint.getY(), circleSize, circleSize);
 
         graphic.setFont(font);

@@ -3,12 +3,12 @@ package game.pong.model;
 import game.pong.input.KeyListener;
 import game.pong.ui.UserInterface;
 import game.pong.ui.components.UIText;
+import game.pong.util.PointUtils;
 import game.pong.util.Settings.Direction;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import penguine.game.model.Game;
@@ -29,10 +29,10 @@ public class Pong extends Game implements Observer {
     private final Ball ball;
 
     public Pong(String name) {
-        super(name, 500, 250, Color.BLACK);
-        this.player = new Player(10, this.Y / 2 - 20, 10, 40, this);
-        this.player2 = new Player(this.X - 20, this.Y / 2 - 20, 10, 40, this);
-        this.ball = new Ball(this.X / 2, this.Y / 2, 10, 10, this);
+        super(name, 500, 250);
+        this.player = new Player(10, this.HEIGHT / 2 - 20, 10, 40, this);
+        this.player2 = new Player(this.WIDHT - 20, this.HEIGHT / 2 - 20, 10, 40, this);
+        this.ball = new Ball(this.WIDHT / 2, this.HEIGHT / 2, 10, 10, this);
     }
 
     public void initialize() {
@@ -96,12 +96,12 @@ public class Pong extends Game implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof Ball) {
             double ballCurrentX = (this.ball.getDirection() == Direction.EAST)
-                    ? this.ball.getReferencePoints()[5].getX()
-                    : this.ball.getReferencePoints()[3].getX();
-            if (ballCurrentX >= this.getX()) {
+                    ? PointUtils.getReferencePointByIndex(ball, 5).getX()
+                    : PointUtils.getReferencePointByIndex(ball, 3).getX();
+            if (ballCurrentX >= this.getWidth()) {
                 this.player.addPoints(1);
                 this.ball.drawInitialDirection();
-            } else if (ballCurrentX <= this.getMinX()) {
+            } else if (ballCurrentX <= this.getX()) {
                 this.player2.addPoints(1);
                 this.ball.drawInitialDirection();
             }
