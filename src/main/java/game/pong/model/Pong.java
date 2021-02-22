@@ -95,7 +95,8 @@ public class Pong extends Game implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Ball) {
-            double ballCurrentX = (this.ball.getDirection() == Direction.EAST)
+            Direction direction = this.ball.getDirection();
+            double ballCurrentX = (direction == Direction.EAST)
                     ? PointUtils.getReferencePointByIndex(ball, 5).getX()
                     : PointUtils.getReferencePointByIndex(ball, 3).getX();
             if (ballCurrentX >= this.getWidth()) {
